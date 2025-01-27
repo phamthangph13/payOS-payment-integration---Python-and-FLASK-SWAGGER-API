@@ -9,9 +9,9 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 # Khởi tạo PayOS với thông tin xác thực
 payOS = PayOS(
-    client_id="c957f077-88ad-4514-baab-d1d09af2ab9e",
-    api_key="7bcb0e37-2200-4715-b5d7-f88528a81c0d",
-    checksum_key="f562322a43c61e9ff92d871dfcd5c23ffb4f1f07baefd1c31c2e0ea426ce81f6"
+    client_id="YOUR_CLIENT_ID",
+    api_key="YOUR_API_KEY",
+    checksum_key="YOUR_CHECK_SUM_KEY"
 )
 
 app = Flask(__name__, static_folder='PUBLIC',
