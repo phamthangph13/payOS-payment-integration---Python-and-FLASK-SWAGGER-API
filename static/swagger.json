@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "QR Code Generator API",
+    "description": "API để tạo và phục vụ mã QR",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/generate-qr": {
+      "post": {
+        "summary": "Tạo mã QR code",
+        "description": "Tạo mã QR code từ số tiền và mô tả",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Thông tin để tạo mã QR",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "description": "Số tiền"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Mô tả giao dịch"
+                }
+              },
+              "required": ["amount"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tạo mã QR thành công",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "transaction_id": {
+                  "type": "string",
+                  "example": "txn_1a2b3c4d5e6f"
+                },
+                "qr_code_url": {
+                  "type": "string",
+                  "example": "http://localhost:5000/qr_codes/txn_1a2b3c4d5e6f.png"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Lỗi server",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/qr_codes/{filename}": {
+      "get": {
+        "summary": "Lấy file ảnh QR code",
+        "description": "Trả về file ảnh QR code theo filename",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "filename",
+            "type": "string",
+            "required": true,
+            "description": "Tên file QR code"
+          }
+        ],
+        "produces": ["image/png"],
+        "responses": {
+          "200": {
+            "description": "File ảnh QR code",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy file"
+          }
+        }
+      }
+    }
+  }
+}
